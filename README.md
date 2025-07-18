@@ -1,66 +1,109 @@
-## Foundry
+# Perpetual Exchange Protocol
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+A fully-featured decentralized perpetual futures trading protocol built in Solidity. Inspired by industry leaders like GMX and dYdX, this protocol enables leveraged long and short positions on various assets with real-time price feeds, collateral management, and liquidation mechanisms.
 
-Foundry consists of:
+---
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## 💡 Overview
 
-## Documentation
+This project implements a robust, production-ready perpetual exchange smart contract system that supports:
 
-https://book.getfoundry.sh/
+- Opening, updating, and closing leveraged positions (long and short)
+- On-chain collateral vault and margin accounting
+- Real-time price data integration using Chainlink oracles
+- Automated liquidation of undercollateralized positions with incentives
+- Modular and upgradeable architecture designed for extensibility and security
 
-## Usage
+---
 
-### Build
+## ⚙️ Core Features
 
-```shell
-$ forge build
-```
+| Feature                     | Description                                                      |
+|----------------------------|------------------------------------------------------------------|
+| ⚖️ Leverage Trading         | Users can open long or short positions with customizable leverage |
+| 🏦 Collateral Vault         | Secure collateral management and accounting                      |
+| 🔄 Position Lifecycle       | Full lifecycle support: open, update (increase/decrease), close  |
+| 💰 PnL Calculation          | Real-time profit and loss calculations based on oracle prices    |
+| 📉 Liquidations             | Incentivized liquidations to maintain system solvency            |
+| 🔗 Chainlink Oracle         | Reliable external price feeds for asset valuations               |
+| 🔐 Access Control & Errors  | Custom errors and ownership control for robustness               |
 
-### Test
+---
 
-```shell
-$ forge test
-```
+## 🧱 Architecture
 
-### Format
+### Core Contracts
 
-```shell
-$ forge fmt
-```
+| Contract            | Responsibility                                             |
+|---------------------|------------------------------------------------------------|
+| `PerpEngine.sol`    | Central orchestrator managing position lifecycle           |
+| `Vault.sol`         | Handles collateral deposits, withdrawals, and balances     |
+| `PositionManager.sol` | Tracks positions, computes PnL, and manages margin status   |
+| `Liquidation.sol`   | Checks health factors and executes liquidations            |
+| `interfaces/`       | External interfaces including `IOracle` and Chainlink APIs |
+| `mocks/`            | Mock ERC20 tokens and Chainlink oracles for testing        |
+| `utils/`            | Utility libraries for math and precision                    |
 
-### Gas Snapshots
+---
 
-```shell
-$ forge snapshot
-```
+## 🧪 Testing (Foundry)
 
-### Anvil
+Comprehensive tests written in Foundry cover:
 
-```shell
-$ anvil
-```
+- Opening, modifying, and closing positions under various scenarios
+- Liquidation triggers and rewards distribution
+- Accurate PnL and margin calculations with price changes
+- Oracle integration and error handling
 
-### Deploy
+### Run Tests
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
+```bash
+forge test -vv
 
-### Cast
+🧾 Protocol Parameters
+Parameter	Description	Example Value
+Minimum Health Factor	Threshold for position liquidation	1e18 (normalized)
+Liquidation Reward Basis Points	Bonus awarded to liquidators	500 (5%)
+Oracle Price Feed	Chainlink aggregator addresses for assets	Configurable per asset
 
-```shell
-$ cast <subcommand>
-```
+🔐 Security Considerations
+Strict margin checks to prevent undercollateralized positions
 
-### Help
+Use of custom errors and events for clarity and gas efficiency
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+Oracle price sanity checks to avoid manipulation
+
+Owner-only functions protected via OpenZeppelin’s Ownable
+
+Modular design facilitates audits and upgrades
+
+📁 Project Structure
+bash
+Copy
+Edit
+perp-exchange/
+├── src/
+│   ├── PerpEngine.sol
+│   ├── Vault.sol
+│   ├── PositionManager.sol
+│   ├── Liquidation.sol
+│   ├── interfaces/
+│   ├── mocks/
+│   └── utils/
+├── test/
+│   ├── PerpEngine.t.sol
+│   ├── Liquidation.t.sol
+├── script/
+│   └── Deploy.s.sol
+└── foundry.toml
+
+
+
+👨‍💻 Author
+Sai Siddush Thungathurthy
+Blockchain Engineer | Smart Contract Developer
+📧 thungasaisiddush@gmail.com
+🌐 LinkedIn
+
+🧾 License
+Released under the MIT License.
