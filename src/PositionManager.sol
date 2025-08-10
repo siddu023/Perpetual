@@ -33,7 +33,8 @@ contract PositionManager is Ownable {
     error ZeroSize();
 
     constructor(address _oracle) Ownable(msg.sender) {
-        require(_oracle != address(0), "Zero oracle address");
+ 
+require(_oracle != address(0), "Zero oracle address");
         oracle = IOracle(_oracle);
     }
 
@@ -61,7 +62,9 @@ contract PositionManager is Ownable {
         delete _positions[msg.sender];
 
         emit PositonClosed(msg.sender, pnl, exitPrice);
-    }
+
+}
+
 
     function _calculatePnL(uint256 size, uint256 entry, uint256 exit, Side side) internal pure returns (int256) {
         if (side == Side.Long) {
