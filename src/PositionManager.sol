@@ -23,7 +23,7 @@ contract PositionManager is Ownable {
     IOracle public oracle;
 
     event PositionOpened(address indexed user, uint256 size, Side side, uint256 entryPrice);
-    event PositonClosed(address indexed user, int256 pnl, uint256 exitPrice);
+    event PositionClosed(address indexed user, int256 pnl, uint256 exitPrice);
     event OracleUpdated(address indexed newOracle);
 
     error InvalidSide();

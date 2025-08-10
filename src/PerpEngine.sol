@@ -16,7 +16,7 @@ contract PerpEngine is Ownable {
     event PositionOpened(address indexed user, uint256 size, uint256 price);
     event PositionClosed(address indexed user, int256 pnl);
 
-    constructor(address _vault, address _positonManager, address _oracle) Ownable(msg.sender) {
+    constructor(address _vault, address _positionManager, address _oracle) Ownable(msg.sender) {
         vault = Vault(_vault);
         positionManager = PositionManager(_positonManager);
         oracle = IOracle(_oracle);
@@ -38,7 +38,7 @@ contract PerpEngine is Ownable {
         emit PositionOpened(msg.sender, size, price);
     }
 
-    function closedPosition() external {
+    function closePosition() external {
         int256 pnl = positionManager.closePosition();
         vault.adjustCollateral(msg.sender, pnl);
 
